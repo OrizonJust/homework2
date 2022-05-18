@@ -14,12 +14,10 @@ import java.util.Scanner;
 public class TestServiceImpl implements TestService {
 
     private final TestDAO dao;
-    private final MessageSource messageSource;
 
     @Autowired
-    public TestServiceImpl(TestDAO dao, MessageSource messageSource) {
+    public TestServiceImpl(TestDAO dao) {
         this.dao = dao;
-        this.messageSource = messageSource;
     }
 
     @Override
@@ -27,17 +25,17 @@ public class TestServiceImpl implements TestService {
         int correctAnswers = 0;
         Scanner scr = new Scanner(System.in);
         String name = scr.nextLine();
-        System.out.println("Hello, " + name + "!\nTest:");
+        System.out.println("Привет, " + name + "!\nТест:");
 
         List<Question> questions = dao.getQuestions();
         for (Question q : questions) {
             System.out.println(q.toString());
-            System.out.print("Your answer is: ");
+            System.out.print("Ваш ответ: ");
             if (checkAnswer(q, scr.nextInt()))
                 correctAnswers++;
         }
 
-        System.out.println("Test: " + correctAnswers + "/" + questions.size());
+        System.out.println("Итог теста: " + correctAnswers + "/" + questions.size());
     }
 
     private boolean checkAnswer(Question question, Integer answer) {
